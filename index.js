@@ -2,16 +2,6 @@ var api_selection = document.getElementById("api-selection");
 var main_data = document.getElementById("main");
 var API_KEY = "";
 
-/*
-fetch("https://api.api-ninjas.com/v1/planets?min_mass=1", {
-    method: 'GET',
-    contentType: 'application/json',
-    headers: {
-        "X-Api-Key": "",
-    },
-}).then(res => res.json()).then(data => populateWebpagePlanets(data));
-*/
-
 api_selection.addEventListener('change', (e) => {
     var api = e.target.value;
     console.log(e.target.value);
@@ -65,17 +55,51 @@ function createURL() {
     var url = "https://api.api-ninjas.com/v1/";
     
 
-    console.log(api_selection.value);
-
     if (api_selection.value === "planets") {
+        //This is us getting the inputs of the user
+        var min_distance = document.getElementById("min-distance").value;
+        var max_distance = document.getElementById("max-distance").value;
+        var min_mass = document.getElementById("min-mass").value;
+        var max_mass = document.getElementById("max-mass").value;
         
+        url = url + "planets?";
+
+        //This is us formatting the inputted data into the URL, so our API understands what we're asking for
+        if (min_distance !== "") url = url + "min_distance_light_year=" + min_distance + "&";
+        if (max_distance !== "") url = url + "max_distance_light_year=" + max_distance + "&";
+        if (min_mass !== "") url = url + "min_mass=" + min_mass + "&";
+        else url = url + "min_mass=1" + "&";
+        if (max_mass !== "") url = url + "max_mass=" + max_mass + "&";
+
+        if (url.endsWith("&")) url = url.substring(0, url.length - 1);
+
+        //TODO: Now that we have our URL, we need to make a request to our API!
         
 
     } else if (api_selection.value === "stars") {
+        //This is us getting the inputs of the user
+        var min_distance = document.getElementById("min-distance").value;
+        var max_distance = document.getElementById("max-distance").value;
+        var min_brightness = document.getElementById("min-brightness").value;
+        var max_brightness = document.getElementById("max-brightness").value;
+        
+        url = url + "stars?";
+
+        //This is us formatting the inputted data into the URL, so our API understands what we're asking for
+        if (min_distance !== "") url = url + "min_distance_light_year=" + min_distance + "&";
+        else url = url + "min_distance_light_year=1" + "&";
+        if (max_distance !== "") url = url + "max_distance_light_year=" + max_distance + "&";
+        if (min_brightness !== "") url = url + "min_apparent_magnitude=" + min_mass + "&";
+        if (max_brightness !== "") url = url + "max_apparent_magnitude=" + max_mass + "&";
+
+        if (url.endsWith("&")) url = url.substring(0, url.length - 1);
+
+        //TODO: Now that we have our URL, we need to make a request to our API!
         
     }
 }
 
+//This function takes JSON information and displays the information to the user
 function populateWebpagePlanets(data) {
     var list = document.getElementById("data");
     var title, distance, period, mass, box;
@@ -107,6 +131,7 @@ function populateWebpagePlanets(data) {
     }
 }
 
+//This function takes JSON information and displays the information to the user
 function populateWebpageStars(data) {
     var list = document.getElementById("data");
     var title, distance, constellation, brightness, box;
