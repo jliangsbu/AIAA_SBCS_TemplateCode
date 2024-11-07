@@ -1,6 +1,6 @@
 var api_selection = document.getElementById("api-selection");
 var main_data = document.getElementById("main");
-var API_KEY = "";
+var API_KEY = "PhJgvM6c6AYbyL2e26NYnw==1mj0MWI2NdhSdLMp";
 
 api_selection.addEventListener('change', (e) => {
     var api = e.target.value;
@@ -74,6 +74,13 @@ function createURL() {
         if (url.endsWith("&")) url = url.substring(0, url.length - 1);
 
         //TODO: Now that we have our URL, we need to make a request to our API!
+        fetch(url, {
+            method: 'GET',
+            contentType: 'application/json',
+            headers:{
+                "X-Api-Key": API_KEY,
+            }
+        }).then(response => response.json()).then(data => populateWebpagePlanets(data));
         
 
     } else if (api_selection.value === "stars") {
@@ -95,6 +102,13 @@ function createURL() {
         if (url.endsWith("&")) url = url.substring(0, url.length - 1);
 
         //TODO: Now that we have our URL, we need to make a request to our API!
+        fetch(url, {
+            method: 'GET',
+            contentType: 'application/json',
+            headers:{
+                "X-Api-Key": API_KEY,
+            }
+        }).then(response => response.json()).then(data => populateWebpageStars(data));
         
     }
 }
